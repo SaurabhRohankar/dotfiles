@@ -52,6 +52,10 @@ git clone https://github.com/SaurabhRohankar/dotfiles.git
 cp dotfiles/statusbar/* ~/.local/bin/statusbar/
 
 echo 'export PATH="$HOME/.local/bin/statusbar:$PATH"' >> ~/.bashrc
+
+#install starship
+curl -sS https://starship.rs/install.sh | sh
+echo 'eval "$(starship init bash)"' >> ~./bashrc
 source ~/.bashrc
 
 echo "Install now complete. You can now logout and change your DE/WM."
