@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo dnf group install "Development Tools"
-sudo dnf install flameshot install git libX11-devel libxcb-devel libXinerama-devel libXft-devel imlib2-devel
+sudo dnf install brightnessctl flameshot install git libX11-devel libxcb-devel libXinerama-devel libXft-devel imlib2-devel
 
 mkdir -p ~/Pictures/Screenshots
 mkdir -p ~/Pictures/backgrounds
@@ -46,5 +46,12 @@ exec dwm
 EOF
 sudo chmod +x /usr/local/bin/dwm-setup
 
-echo "Install now complete. You can now logout and change your DE/WM."
+cd
+mkdir -p ~/.local/bin/statusbar
+git clone https://github.com/SaurabhRohankar/dotfiles.git
+cp dotfiles/statusbar/* ~/.local/bin/statusbar/
 
+echo 'export PATH="$HOME/.local/bin/statusbar:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+
+echo "Install now complete. You can now logout and change your DE/WM."
