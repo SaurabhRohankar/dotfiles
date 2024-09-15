@@ -1,0 +1,50 @@
+#!/bin/sh
+
+# Define the URL regex pattern
+urlregex="(((http|https|gopher|gemini|ftp|ftps|git)://|www\.)[a-zA-Z0-9.]*[:;a-zA-Z0-9./+@$&%?\$#=_~-]*)|((magnet:\?xt=urn:btih:)[a-zA-Z0-9]*)"
+
+# Extract URLs from the terminal input
+urls=$(sed 's/.*│//g' | tr -d '\n' | grep -oE "$urlregex" | uniq | sed 's/^\(www\.\)/http:\/\/\1/')
+
+# Check if URLs are found
+if [ -z "$urls" ]; then
+    echo "No URLs found."
+    exit 1
+fi
+
+# Parse command line options
+while getopts "hoc" opt; do
+    case "${opt}" in
+        h)
+            echo "Optional arguments for custom use:"
+            echo "  -c: Copy URL to clipboard"
+            echo "  -o: Open URL in browser"
+            echo "  -h: Show this help message"
+            exit 0
+            ;;
+        o)
+            # Choose a URL from the list and open it
+            chosen=$(echo "$urls" | rofi -dmenu -i -p 'Follow which URL?' -l 10)
+            if [ -n "$chosen" ]; then
+                xdg-open "$chosen" >/dev/null 2>&1 &
+            fi
+            ;;
+        c)
+            # Choose a URL from the list and copy it to clipboard
+            chosen=$(echo "$urls" | rofi -dmenu -i -p 'Copy which URL?' -l 10)
+            if [ -n "$chosen" ]; then
+                echo "$chosen" | xclip -selection clipboard
+            fi
+            ;;
+        *)
+            echo "Invalid option: -${OPTARG}"
+            exit 1
+            ;;
+    esac
+done
+
+# Ensure no options were provided
+if [ "$OPTIND" -eq 1 ]; then
+    echo "No options provided. Use -h for help."
+    exit 1
+fi
