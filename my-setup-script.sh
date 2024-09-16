@@ -47,7 +47,9 @@ sudo chmod +x /usr/local/bin/dwm-setup
 
 cd
 mkdir -p ~/.local/bin/statusbar
-cp dotfiles/statusbar/* ~/.local/bin/statusbar/
+cp ~/dotfiles/statusbar/* ~/.local/bin/statusbar/
+cp -r ~/dotfiles/rofi/ ~/.config/
+cp ~/dotfiles/starship.toml ~/.config/
 
 echo 'export PATH="$HOME/.local/bin/statusbar:$PATH"' >> ~/.bashrc
 
