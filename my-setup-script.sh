@@ -1,16 +1,16 @@
 #!/bin/bash
 
-sudo dnf group install "Development Tools"
-sudo dnf install brightnessctl flameshot install git libX11-devel libxcb-devel libXinerama-devel libXft-devel imlib2-devel
+sudo dnf group install "Development Tools" -y
+sudo dnf install zoxide fzf rofi feh brightnessctl flameshot install git libX11-devel libxcb-devel libXinerama-devel libXft-devel imlib2-devel -y
 
 mkdir -p ~/Pictures/Screenshots
 mkdir -p ~/Pictures/backgrounds
 
 wget -P ~/Downloads/ https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/JetBrainsMono.zip
-unzip ~/Downloads/JetBrainsMono/* -d ~/Downloads/
+unzip ~/Downloads/JetBrainsMono.zip -d ~/Downloads/JetBrainsMono
 sudo mkdir -p /usr/share/fonts/nerd-fonts
 sudo cp ~/Downloads/JetBrainsMono/* /usr/share/fonts/nerd-fonts/
-
+rm -rf Downloads/JetBrainsMono*
 
  # Set up XDG directories
 xdg_config_home=${XDG_CONFIG_HOME:-$HOME/.config}
@@ -23,7 +23,6 @@ cd "$xdg_data_home/suckless"
 for app in dwm st dwmblocks; do
     git clone "https://github.com/SaurabhRohankar/$app"
     cd "$app"
-    make
     sudo make clean install
     cd ..
 done
@@ -48,14 +47,14 @@ sudo chmod +x /usr/local/bin/dwm-setup
 
 cd
 mkdir -p ~/.local/bin/statusbar
-git clone https://github.com/SaurabhRohankar/dotfiles.git
 cp dotfiles/statusbar/* ~/.local/bin/statusbar/
 
 echo 'export PATH="$HOME/.local/bin/statusbar:$PATH"' >> ~/.bashrc
 
 #install starship
 curl -sS https://starship.rs/install.sh | sh
-echo 'eval "$(starship init bash)"' >> ~./bashrc
+echo 'eval "$(starship init bash)"' >> ~/.bashrc
+echo 'eval "$(zoxide init bash)"' >> ~/.bashrc
 source ~/.bashrc
 
 echo "Install now complete. You can now logout and change your DE/WM."
