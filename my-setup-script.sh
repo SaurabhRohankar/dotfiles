@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo dnf group install "Development Tools" -y
-sudo dnf install zoxide fzf rofi feh brightnessctl flameshot install git libX11-devel libxcb-devel libXinerama-devel libXft-devel imlib2-devel -y
+sudo dnf install zoxide fzf rofi feh brightnessctl flameshot git libX11-devel libxcb-devel libXinerama-devel libXft-devel imlib2-devel -y
 
 mkdir -p ~/Pictures/Screenshots
 mkdir -p ~/Pictures/backgrounds
