@@ -22,6 +22,7 @@ disabled = false
 Windows = " "
 Arch = "󰣇"
 Ubuntu = ""
+Fedora = " "
 
 # Shows the username
 [username]
